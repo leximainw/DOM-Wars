@@ -1,14 +1,11 @@
-const $ = x => document.querySelectorAll(x);
-$.first = x => $(x)[0] || null;
-
-for (const elem of $('p')) {
+for (const elem of document.querySelectorAll('p')) {
     elem.innerText = elem.innerText
-        .replaceAll('?', '\ud83e\udd14')
-        .replaceAll('!', '\ud83d\ude32')
+        .replaceAll('?', '\uD83E\uDD14')
+        .replaceAll('!', '\uD83D\uDE32')
 }
 
-$.first('#switch').addEventListener('click', e => {
-    for (const elem of $('p')) {
+document.querySelector('#switch').addEventListener('click', e => {
+    for (const elem of document.querySelectorAll('p')) {
         // HACK: awkwardly switch characters with replaceAll only
         elem.innerText = elem.innerText
             .replaceAll('\\', '\\/')
@@ -26,12 +23,12 @@ let callback
 let lastUpdate
 let offset
 
-$.first('#surprise').addEventListener('click', e => {
+document.querySelector('#surprise').addEventListener('click', e => {
     clearInterval(callback)
     lastUpdate = Date.now()
     offset = 30
     callback = setInterval(creditRoll, 10)
-    $.first('#theme').play()
+    document.querySelector('#theme').play()
 })
 
 function creditRoll() {
@@ -40,17 +37,13 @@ function creditRoll() {
     lastUpdate = now
     offset -= 2 * dt;
 
-    $.first('body').style = `background-color: black; color: yellow; width: 40vw; margin: auto; transform: perspective(100vmin) translateY(30vmin) rotateX(60deg) translateY(${offset}em);`
+    // HACK: set style to move credit roll
+    document.querySelector('body').style = `background-color: black; color: yellow; width: 40vw; margin: auto; transform: perspective(100vmin) translateY(30vmin) rotateX(60deg) translateY(${offset}em);`
 
     if (offset < -70) {
         clearInterval(callback)
-        $.first('body').style = undefined
-        $.first('#theme').pause()
-        $.first('#theme').currentTime = 0
+        document.querySelector('body').style = undefined
+        document.querySelector('#theme').pause()
+        document.querySelector('#theme').currentTime = 0
     }
 }
-
-// .credits-scroll
-// {
-//     transform: perspective(100vmin) translateY(30vmin) rotateX(60deg) translateY(10em);
-// }
