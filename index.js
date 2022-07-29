@@ -28,6 +28,7 @@ document.querySelector('#surprise').addEventListener('click', e => {
     lastUpdate = Date.now()
     offset = 30
     callback = setInterval(creditRoll, 10)
+    document.querySelector('body').style = "background:url('Starfield.png');"
     document.querySelector('#theme').play()
 })
 
@@ -38,11 +39,12 @@ function creditRoll() {
     offset -= 2 * dt;
 
     // HACK: set style to move credit roll
-    document.querySelector('body').style = `background-color: black; color: yellow; width: 40vw; margin: auto; transform: perspective(100vmin) translateY(30vmin) rotateX(60deg) translateY(${offset}em);`
+    document.querySelector('main').style = `background-color: black; color: yellow; width: 40vw; margin: auto; transform: perspective(100vmin) translateY(30vmin) rotateX(60deg) translateY(${offset}em);`
 
     if (offset < -70) {
         clearInterval(callback)
         document.querySelector('body').style = undefined
+        document.querySelector('main').style = undefined
         document.querySelector('#theme').pause()
         document.querySelector('#theme').currentTime = 0
     }
